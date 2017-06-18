@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang = "en">
+<head>
+<link rel="stylesheet" href="mystyle.css">
+<meta charset = "utf-8" />
+<title>Postage Calculator</title>
+<style>
+</style>
+
+</head>
+<body>
+<h1>Postage Calculator</h1>
+<hr>
+<form action="/getRate" method="get">
+  <label>Weight (in oz): </label> <input type="number" name="weight" max="13">
+<label>Package Type: </label>  <select name="PostageType">
+  <option value="LettersStamped">Letters (Stamped)</option>
+  <option value="LettersMettered">Letters (Metered)</option>
+  <option value="LargeEnvelopes">Large Envelopes (Flats)</option>
+  <option value="Parcels">Parcels</option>
+</select>
+<br></br>
+<input type="submit">
+</form>
+
+
+
+</body>
+</html>
