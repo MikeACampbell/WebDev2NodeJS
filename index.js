@@ -19,7 +19,7 @@ app.set('view engine', 'ejs');
 
 var pg = require("pg"); // This is the postgres database connection module.
 //const connectionString = "postgres://ta_user:ta_pass@localhost:5433/onlinestore";
-const connectionString = DATABASE_URL;
+const connectionString = process.env.DATABASE_URL;
 
 app.get('/getItem', function(request, response) {
 	getItem(request, response);
