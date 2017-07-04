@@ -37,7 +37,7 @@ app.get('/getItemsFromDb', function(request, response) {
 			callback(err, null);
 		}
 
-		var sql = "SELECT itemname, itemprice FROM item";
+		var sql = "SELECT itemname, itemprice FROM items";
 
 		var query = client.query(sql, function(err, result) {
 			client.end(function(err) {
