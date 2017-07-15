@@ -1,7 +1,7 @@
 {
-  "name": "node-js-getting-started",
+  "name": "Cookie Store",
   "version": "0.2.6",
-  "description": "A sample Node.js app using Express 4",
+  "description": "A simple Store",
   "engines": {
     "node": "6.10.2"
   },
@@ -10,9 +10,12 @@
     "start": "node index.js"
   },
   "dependencies": {
-   "pg": "6.x",
     "ejs": "2.5.6",
-    "express": "4.15.2"
+    "express": "4.15.3",
+    "pg": "6.x",
+    "stylus": "^0.54.5",
+	"express-session": "1.15.3",
+	"bcrypt": "1.0.2"
   },
   "repository": {
     "type": "git",
