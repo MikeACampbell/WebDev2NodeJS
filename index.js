@@ -80,17 +80,14 @@ app.post('/verifyOrder', verify, function(request, response) {
 											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
-
-												console.log("Before: " + request.body.clientCart[count].price);
-												//So because of how I choose to store the price and the formating of it when placed in the cart this will always trigger.
-												//request.body.clientCart[count].price = resultCart.rows[i].itemprice;
-												console.log("After: " + request.body.clientCart[count].price);
+												console.log("Per Unit Price does not match server correcting");
+												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
+												
 											}
 											else 
 											{
 												
 												
-												console.log("Fixed it");
 												
 											}
 										}
