@@ -3,6 +3,25 @@ var app = express();
 var url = require('url');
 var router = express.Router();
 
+var bcrypt = require('bcrypt'); //Handles Password Encryption
+const saltRounds = 10;
+
+
+var bodyParser = require('body-parser')
+app.use( bodyParser.json() );       // to support JSON-encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+var session = require('express-session')
+
+// set up sessions
+app.use(session({
+  secret: 'my-super-secret-secret!',
+  resave: false,
+  saveUninitialized: true
+}))
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use('/', express.static(__dirname + '/public'));
@@ -15,17 +34,81 @@ app.set('view engine', 'ejs');
 
 // Stuff for DB start
 
-
-
 var pg = require("pg"); // This is the postgres database connection module.
-//const connectionString = "postgres://ta_user:ta_pass@localhost:5433/onlinestore";
-const connectionString = process.env.DATABASE_URL;
+const connectionString = process.env.DATABASE_URL || "postgres://ta_user:ta_pass@localhost:5433/onlinestore";
+//const connectionString = process.env.DATABASE_URL;
 
-app.get('/getItem', function(request, response) {
+
+//I don't think this is needed anymore.
+app.post('/getItem', function(request, response) {
 	getItem(request, response);
 });
 
-app.get('/getItemsFromDb', function(request, response) {
+
+
+//Verifies that corrects any potential altering of prices.
+app.post('/verifyOrder', verify, function(request, response) {
+	
+	//console.log(request.body);
+	var temp1 = 0;
+	var cartVerified = false;
+	var client = new pg.Client(connectionString);
+		client.connect(function(err) {
+			if (err) {
+				console.log("Error connecting to DB: ")
+				console.log(err);
+				callback(err, null);
+			}
+			
+				var sql = "SELECT item_id, itemprice FROM item";
+				var query = client.query(sql, function(err, resultCart) {
+					client.end(function(err) {
+						if (err) throw err;
+					});
+						if (err) {
+							console.log("Error in query: ")
+							console.log(err);
+							callback(err, null);
+						}
+						else{
+							var count = 0
+							request.body.clientCart.forEach(function(value){
+								  
+								  for(var i = 0; i < resultCart.rowCount; i++){
+										if(request.body.clientCart[count].item_id == resultCart.rows[i].item_id)
+										{
+											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
+											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
+											{
+
+												console.log("Before: " + request.body.clientCart[count].price);
+												//So because of how I choose to store the price and the formating of it when placed in the cart this will always trigger.
+												//request.body.clientCart[count].price = resultCart.rows[i].itemprice;
+												console.log("After: " + request.body.clientCart[count].price);
+											}
+											else 
+											{
+												
+												
+												console.log("Fixed it");
+												
+											}
+										}
+									  
+									  
+									}
+									count++;
+							});
+							
+						}
+				});
+
+			});
+	
+		
+});
+
+app.post('/getItemsFromDb', verify ,function(request, response) {
 	console.log("Getting all items from DB");
 
 	var client = new pg.Client(connectionString);
@@ -37,7 +120,7 @@ app.get('/getItemsFromDb', function(request, response) {
 			callback(err, null);
 		}
 
-		var sql = "SELECT itemname, itemprice FROM items";
+		var sql = "SELECT * FROM item";
 
 		var query = client.query(sql, function(err, result) {
 			client.end(function(err) {
@@ -50,8 +133,8 @@ app.get('/getItemsFromDb', function(request, response) {
 				callback(err, null);
 			}
 
-			console.log("Found result: " + JSON.stringify(result.rows));
-			response.end(JSON.stringify(result.rows));
+			//console.log("Found result: " + JSON.stringify(result.rows));
+			response.json(result.rows);
 
 			
 		});
@@ -59,7 +142,17 @@ app.get('/getItemsFromDb', function(request, response) {
 
 });
 
-app.get('/getOrdersFromDb', function(request, response) {
+app.post('/verify', function(request, response) {
+	verifyOnLoad(request, response);
+});
+
+
+app.post('/getOrdersFromDb', verify, getOrders);
+
+
+function getOrders(request, response)
+{
+	
 	console.log("Getting all Orders from DB");
 
 	var client = new pg.Client(connectionString);
@@ -71,9 +164,10 @@ app.get('/getOrdersFromDb', function(request, response) {
 			callback(err, null);
 		}
 
-		var sql = "SELECT items FROM orders";
+		//Check User Role, if Admin pull all orders. If time permits add ablity to set order as shhipped.
+		var sql = "SELECT * FROM orders INNER JOIN users on ($1) = orders.userID";
 
-		var query = client.query(sql, function(err, result) {
+		var query = client.query(sql, [request.session.user_id], function(err, result) {
 			client.end(function(err) {
 				if (err) throw err;
 			});
@@ -90,8 +184,216 @@ app.get('/getOrdersFromDb', function(request, response) {
 			
 		});
 	});
+	
+	
+	
+	
+	
+}
+
+
+
+app.post('/registerUser', function(request, response) {
+	console.log("Checking if User is already Logged in");
+	
+	
+	
+	
+	console.log("Creating account");
+
+	var uName = request.body.userName;
+	var pword =  request.body.pword;
+	
+	var client = new pg.Client(connectionString);
+
+	client.connect(function(err) {
+		if (err) {
+			console.log("Error connecting to DB: ")
+			console.log(err);
+			callback(err, null);
+		}
+
+		var sql = "SELECT userID FROM users WHERE userName = ($1)";
+
+		var query = client.query(sql, [uName], function(err, result) {
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+			
+			console.log(result.rowCount);
+			
+			if (result.rowCount == 0)
+			{
+				console.log("New Username. Hasing Password")
+				bcrypt.genSalt(saltRounds, function(err, salt) {
+					bcrypt.hash(pword, salt, function(err, hash) {
+       
+					
+						var client = new pg.Client(connectionString);
+
+						client.connect(function(err) {
+							if (err) {
+								console.log("Error connecting to DB: ")
+								console.log(err);
+								callback(err, null);
+							}
+
+							var sql = "INSERT INTO USERS(username, pword, role) VALUES ($1, $2, 1)";
+
+							var query = client.query(sql, [uName, hash], function(err, result2) {
+								client.end(function(err){
+									if (err) throw err;
+								});
+								if (err) {
+									console.log("Error in query: ")
+									console.log(err);
+									callback(err, null);
+								}
+								
+								if (result2.rowCount == 1)
+								{
+								console.log("Registration Complete");
+								var logged = {succes: "success", username: uName};
+								response.json(logged);
+								}
+							});
+						});					
+					});
+				});	
+			}
+			else 
+			{
+				console.log("Username Already Exists. Displaying Error");
+				var logged = {succes: "failed", username: ""};
+				response.json(logged);
+				
+			}
+			
+		});
+	});
+});
+
+app.post('/signInUser', function(request, response) {
+	console.log("Logging in");
+	
+	var uName = request.body.userName;
+	var pword =  request.body.pword;
+	
+			var client = new pg.Client(connectionString);
+			client.connect(function(err) {
+				if (err) {
+					console.log("Error connecting to DB: ")
+					console.log(err);
+					callback(err, null);
+				}
+					var sql = "SELECT userID, pword, role FROM users WHERE userName = ($1)";
+					var query = client.query(sql, [uName], function(err, result) {
+						client.end(function(err) {
+							if (err) throw err;
+						});
+							if (err) {
+								console.log("Error in query: ")
+								console.log(err);
+								callback(err, null);
+							}
+							if (result.rowCount == 1) {
+
+								var hash = result.rows[0].pword;
+								
+								bcrypt.compare(pword, hash, function(err, result2) {
+
+									if (result2 == true)
+									{
+										
+										console.log("Login Attempt by " + uName + " was succesful.");
+										
+										request.session.user = uName;
+										request.session.userRole = result.rows[0].role;
+										request.session.user_id = result.rows[0].userID;
+										result3 = {success: true,
+													userName: uName};
+										response.json(result3);
+										
+									}
+									else if (result2 == false)
+									{
+										
+										console.log("Login Attempt by " + uName + " was unsuccesful.");
+										result3 = {success: false};
+										response.json(result3);
+										
+										
+									}
+									else 
+									{
+										//There shouldn't be any way for this to be triggered, but just in case I have it just defualt fails the login 
+										console.log("Uh....well this is awkward. Somehow a boolean ended up being neither true or false. Let's just fail the login just in case.");
+										result3 = {success: false};
+										response.json(result3);
+										
+									}
+								});
+								
+								
+								
+							}
+								
+					});
+				});
+	
 
 });
+
+
+app.post('/logoutUser', function(request, response) {
+	var logoutResult = {success: false};
+	
+	if (request.session.user) {
+		console.log("Logging out " + request.session.user);
+		request.session.destroy();
+		logoutResult = {success: true};
+	}
+
+	response.json(logoutResult);
+	
+});
+
+
+//This handles maintaing a log in status per session. 
+
+function verifyOnLoad(request, response) {
+	var verifyResult = {success: false};
+	
+	if (request.session.user == request.body.userName)
+	{
+		console.log("verifed with Server that user is logged in.")
+		verifyResult = {success: true};
+
+	}
+		response.json(verifyResult);
+}
+
+
+//This is a middleware function
+function verify(request, response, next) {
+	
+	if (request.session.user)
+	{
+		next();
+
+	}
+	else{
+		var result = {success:false, message: "Access Denied"};
+		response.status(401).json(result);
+}
+}
+
 
 
 
@@ -111,7 +413,8 @@ function getItemsFromDb(request, response) {
 		var sql = "SELECT * FROM item";
 
 		var query = client.query(sql, function(err, result) {
-			client.end(function(err) {
+			client.end(function(err) 
+			{
 				if (err) throw err;
 			});
 
@@ -146,6 +449,8 @@ function getItem(request, response) {
 		}
 	});
 }
+
+
 
 function getItemFromDb(id, callback) {
 	console.log("Getting person from DB with id: " + id);

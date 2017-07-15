@@ -2,3 +2,74 @@ body
 {
     background-color: lightblue;
 }
+p.header
+{
+	
+	background-color: blue;
+	padding:10px 15px;
+	overflow:hidden;
+border-bottom:8px solid #841f1e;
+box-shadow:0 -12px 12px -12px #000 inset;
+position:relative;z-index:1
+}
+
+
+p.error{
+	
+	
+	color: red;
+	
+	
+	
+}
+
+td.removeButton
+{
+	
+	
+	border: none;
+	
+	
+	
+}
+
+
+button.remover
+{
+	
+	float: right;
+	margin-right: -80px;
+	
+}
+
+button.cart
+{
+	float: right;
+	
+	
+	
+	
+	
+}
+
+
+.storeMember {
+    display: inline-block;
+    width: 250px;
+    height: 200px;
+    vertical-align: top;
+	padding-right: 20px;
+	padding-bottom: 80px;
+}
+
+.itemName {
+     display: inline;
+
+
+}
+
+.storeMember img {
+    width: 100%;
+    display: block;
+
+}
