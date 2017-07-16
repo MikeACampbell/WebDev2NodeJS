@@ -168,12 +168,23 @@ $(document).on('click', "#confrmOrder-button", function () {
 		{
 			clientCart: cart
 		},
-		succes: function (result){
-			
-			
-			
-			
-			
+		success: function (result){
+			var tempTotal = 0;
+			var temp1 ="<div class='confirmation'>Order Confirmation</div>"
+			$("#welcome").html(temp1);
+			var temp2 = "<table id='orderTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
+			for(var i = 0; i < cart.length; i++)
+		{
+		
+			temp2 = temp2 + "<tr><td>" + cart[i].item_name + "</td><td>" + cart[i].qty + "</td><td>$" + cart[i].price.toFixed(2)+ "</td></tr>";
+			tempTotal = tempTotal + cart[i].price;
+		
+		}
+	
+		temp2 = temp2 + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><div class='moreExplaining'>Thank You For the Order, you'll pay at pickup at our store</div>";
+		$("#divResults").html(temp2);
+		sessionStorage.clientCart = [];
+		cart = [];
 			
 			
 			

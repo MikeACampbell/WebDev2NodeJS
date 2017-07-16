@@ -52,6 +52,14 @@ app.post('/verifyOrder', verify, function(request, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
+	var items = {
+		
+		name:
+		qty:
+		
+	};
+	var allItems = [];
+	var total = 0;
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -60,7 +68,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 				callback(err, null);
 			}
 			
-				var sql = "SELECT item_id, itemprice FROM item";
+				var sql = "SELECT item_id, itemname, itemprice FROM item";
 				var query = client.query(sql, function(err, resultCart) {
 					client.end(function(err) {
 						if (err) throw err;
@@ -71,7 +79,12 @@ app.post('/verifyOrder', verify, function(request, response) {
 							callback(err, null);
 						}
 						else{
-							var count = 0
+							
+							
+							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
+							//I'm just saying this is a popular local store and they only do in store pickup
+							var count = 0;
+						
 							request.body.clientCart.forEach(function(value){
 								  
 								  for(var i = 0; i < resultCart.rowCount; i++){
@@ -80,25 +93,51 @@ app.post('/verifyOrder', verify, function(request, response) {
 											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
-												console.log("Per Unit Price does not match server correcting");
+												//console.log("Per Unit Price does not match server. correcting");
+												
+												
 												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
-												
-											}
-											else 
-											{
-												
-												
-												
+												tempItemsrequest.body.clientCart[count] + " " + request.body.clientCart[count].qty + ", "; 
+												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
 											}
 										}
-									  
-									  
 									}
 									count++;
 							});
 							
+								
 						}
 				});
+				
+				
+				
+				
+				
+				var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, resultCart) {
+					client.end(function(err) {
+						if (err) throw err;
+						});
+						if (err) {
+							console.log("Error in query: ")
+							console.log(err);
+							callback(err, null);
+						}
+						else{
+							
+							
+							
+							
+							
+						}
+						
+				});
+				
+				
+				
+				
+				
+				response.send(request.body.clientCart);
 
 			});
 	
