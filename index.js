@@ -52,13 +52,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-	var items = {
-		
-		name:,
-		qty:
-		
-	};
-	var allItems = [];
+
+	var allItems = "";
 	var total = 0;
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
