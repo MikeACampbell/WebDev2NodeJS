@@ -54,7 +54,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 	var cartVerified = false;
 	var items = {
 		
-		name:
+		name:,
 		qty:
 		
 	};
