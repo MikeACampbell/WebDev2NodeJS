@@ -112,7 +112,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 				
 				
 				
-				
+		/*		
 				var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, resultCart) {
 					client.end(function(err) {
@@ -132,7 +132,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 						}
 						
 				});
-				
+			*/	
 				
 				
 				
