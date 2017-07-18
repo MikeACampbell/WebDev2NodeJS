@@ -44,7 +44,8 @@ app.post('/getItem', function(request, response) {
 	getItem(request, response);
 });
 
-
+var allItems = ""; 
+	var total = 0;
 
 //Verifies that corrects any potential altering of prices then adds to order table. 
 app.post('/verifyOrder', verify, function(request, response) {
@@ -55,8 +56,6 @@ app.post('/verifyOrder', verify, function(request, response) {
 	
 	//console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
-	var allItems = ""; 
-	var total = 0;
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -108,8 +107,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 										
 										request.session.allItems = allItems;
 										request.session.total	=	total;
-										//console.log("Items: "+ allItems);
-										//console.log("Total: " + total.toFixed(2));
+										console.log("Items: "+ allItems);
+										console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
@@ -120,8 +119,9 @@ app.post('/verifyOrder', verify, function(request, response) {
 					}
 				});		
 
-	
-	console.log("Contents of allItems: " + allItems);
+	console.log("Items: "+ allItems);
+										console.log("Total: " + total.toFixed(2));
+	/*
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [request.session.allItems, request.session.user_id, request.session.total], function(err, result) {
 		client.end(function(err) {
@@ -141,6 +141,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 			}
 						
 		});
+		*/
 	});		
 		
 });
