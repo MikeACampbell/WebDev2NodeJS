@@ -51,7 +51,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 	
 	//console.log(request.body);
 	var temp1 = 0;
-	var cartVerified = false;
+	cartVerified = { success: false} ;
 	
 	console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
@@ -113,7 +113,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 								}
 						}
 							
-						console.log("IS THIS REAL" + request.session.user_id);
+						console.log(allItems);
+						console.log(total);
 					}
 				});		
 						
@@ -130,7 +131,7 @@ var client = new pg.Client(connectionString);
 
 			
 			
-	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+	//var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
@@ -142,7 +143,7 @@ var client = new pg.Client(connectionString);
 			}
 			else{
 				cartVerified = { success: true} ;
-				console.log("Yay");
+				
 				
 				
 				
