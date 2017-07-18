@@ -104,9 +104,9 @@ app.post('/verifyOrder', verify, function(request, response) {
 										{
 										var tempPrice = request.body.clientCart[x].price;
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
-										total = total + parseFloat(tempPrice).toFixed(2);
+										total = total + parseFloat(tempPrice);
 										console.log("Items: "+ allItems);
-										console.log("Total: " + total);
+										console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
