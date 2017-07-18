@@ -27,7 +27,7 @@ $(document).on('click', "#store-button", function () {
 			temp = temp + "<tr><td>" + result[i].orderid + "</td><td>" + result[i].items + "</td><td>" + result[i].total + "</td></tr>";
 		}
 		
-		$("#divResults").html(tempHolder);
+		$("#divResults").html(temp);
 		
         },
 		statusCode:
