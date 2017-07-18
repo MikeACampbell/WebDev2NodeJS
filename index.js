@@ -123,7 +123,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 				//						console.log("Total: " + total.toFixed(2));
 	
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [request.session.allItems, request.session.user_id, request.session.total], function(err, result) {
+	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
 			});
