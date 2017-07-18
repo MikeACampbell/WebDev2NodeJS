@@ -127,7 +127,7 @@ function displayCart()
 {
 	
 	$("#welcome").text("Shopping Cart");
-	var temp = "<table id='cartTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
+	var temp = "<ht/><table id='cartTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
 	var tempTotal = 0;
 	
 	if (cart.length == 0)
