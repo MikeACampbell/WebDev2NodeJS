@@ -105,10 +105,10 @@ app.post('/verifyOrder', verify, function(request, response) {
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
 										total = total + parseFloat(tempPrice);
 										
-										request.session.allItems = allItems;
-										request.session.total	=	total;
-										console.log("Items: "+ allItems);
-										console.log("Total: " + total.toFixed(2));
+										//request.session.allItems = allItems;
+										//request.session.total	=	total;
+										//console.log("Items: "+ allItems);
+									//	console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
@@ -119,9 +119,9 @@ app.post('/verifyOrder', verify, function(request, response) {
 					}
 				});		
 
-	console.log("Items: "+ allItems);
-										console.log("Total: " + total.toFixed(2));
-	/*
+	//console.log("Items: "+ allItems);
+				//						console.log("Total: " + total.toFixed(2));
+	
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [request.session.allItems, request.session.user_id, request.session.total], function(err, result) {
 		client.end(function(err) {
@@ -141,7 +141,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 			}
 						
 		});
-		*/
+		
 	});		
 		
 });
