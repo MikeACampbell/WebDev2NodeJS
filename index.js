@@ -47,11 +47,13 @@ app.post('/getItem', function(request, response) {
 
 
 //Verifies that corrects any potential altering of prices.
-app.post('/verifyOrder', verify, function(req, response) {
+app.post('/verifyOrder', verify, function(request, response) {
 	
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
+	
+	console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id);
 
 	var allItems = ""; 
 	var total = 0;
@@ -82,28 +84,28 @@ app.post('/verifyOrder', verify, function(req, response) {
 						//I'm just saying this is a popular local store and they only do in store pickup
 					
 					
-						 for(var x = 0; x < req.body.clientCart.length; x++)
+						 for(var x = 0; x < request.body.clientCart.length; x++)
 						 {
 							  for(var i = 0; i < resultCart.rowCount; i++)
 							  {
-									if(req.body.clientCart[x].item_id == resultCart.rows[i].item_id)
+									if(request.body.clientCart[x].item_id == resultCart.rows[i].item_id)
 									{		
-										temp1 = req.body.clientCart[x].price / req.body.clientCart[x].qty;
+										temp1 = request.body.clientCart[x].price / request.body.clientCart[x].qty;
 										if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 										{
 											console.log(resultCart);
 											
 											
-											req.body.clientCart[x].price = resultCart.rows[i].itemprice * req.body.clientCart[x].qty;
-											allItems = req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * req.body.clientCart[x].qty;
+											request.body.clientCart[x].price = resultCart.rows[i].itemprice * request.body.clientCart[x].qty;
+											allItems = request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
+											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * request.body.clientCart[x].qty;
 											//console.log(allItems);
 										}
 										else
 										{
 										
-										allItems = allItems + req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * req.body.clientCart[x].qty;
+										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
+										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * request.body.clientCart[x].qty;
 										}
 									}
 								
@@ -111,7 +113,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 								}
 						}
 							
-						console.log("IS THIS REAL" + req.session.user_id);
+						console.log("IS THIS REAL" + request.session.user_id);
 					}
 				});		
 						
@@ -129,7 +131,7 @@ var client = new pg.Client(connectionString);
 			
 			
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [allItems, req.session.user_id, total], function(err, result) {
+	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
 			});
