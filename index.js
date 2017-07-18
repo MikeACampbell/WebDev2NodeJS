@@ -356,12 +356,12 @@ app.post('/signInUser', function(request, response) {
 
 									if (result2 == true)
 									{
-										console.log(result.rows[0].userID);
+										console.log(result.rows[0].userid);
 										console.log("Login Attempt by " + uName + " was succesful.");
 										
 										request.session.user = uName;
 										request.session.userRole = result.rows[0].role;
-										request.session.user_id = result.rows[0].userID;
+										request.session.user_id = result.rows[0].userid;
 										result3 = {success: true,
 													userName: uName};
 										response.json(result3);
