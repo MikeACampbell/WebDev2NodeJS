@@ -96,56 +96,53 @@ app.post('/verifyOrder', verify, function(req, response) {
 											
 											req.body.clientCart[x].price = resultCart.rows[i].itemprice * req.body.clientCart[x].qty;
 											allItems = req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
-											console.log(allItems);
+											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * req.body.clientCart[x].qty;
+											//console.log(allItems);
 										}
 										else
 										{
-										console.log(resultCart);
+										
 										allItems = allItems + req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
+										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * req.body.clientCart[x].qty;
 										}
 									}
 								
 									
 								}
 						}
-								
+						cartVerified = { success: true} ;	
+						console.log(allItems);
 					}
 				});		
 						
 			});
-	});
-		
 
 
 
 			
-			/*	
+			
+	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
+		client.end(function(err) {
+			if (err) throw err;
+			});
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+			else{
 				
-	            var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, result) {
-					client.end(function(err) {
-						if (err) throw err;
-						});
-						if (err) {
-							console.log("Error in query: ")
-							console.log(err);
-							callback(err, null);
-						}
-						else{
-							
-							
-							
-							
-							
-						}
+				
+				
+				
+				
+			}
 						
 				});
 				
-			*/	
-				
-	//			response.send(req.bo);
+});
+		
 
 
 app.post('/getItemsFromDb', verify ,function(request, response) {
