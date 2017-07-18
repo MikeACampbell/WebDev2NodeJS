@@ -47,12 +47,12 @@ app.post('/getItem', function(request, response) {
 
 
 //Verifies that corrects any potential altering of prices.
-app.post('/verifyOrder', verify, function(request, response) {
+app.post('/verifyOrder', verify, function(req, response) {
 	
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-	console.log(request.body.cart);
+	console.log(req.body.cart);
 	var allItems = ""; // 
 	var total = 0;
 	/*
