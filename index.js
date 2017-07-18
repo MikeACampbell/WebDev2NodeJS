@@ -127,16 +127,12 @@ app.post('/verifyOrder', verify, function(request, response) {
 					
 				}
 				
+				response.send(orderedResult);
+				
 		});
 				
 				
-				
-				
-				response.send(orderedResult);
 
-			});
-	
-		
 });
 
 app.post('/getItemsFromDb', verify ,function(request, response) {
