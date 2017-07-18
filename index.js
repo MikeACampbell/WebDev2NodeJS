@@ -88,11 +88,11 @@ app.post('/verifyOrder', verify, function(request, response) {
 											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
-												//console.log("Per Unit Price does not match server. correcting");
+												console.log(resultCart);
 												
 												
 												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
-												//request.body.clientCart[count] + " " + request.body.clientCart[count].qty + ", "; 
+												allItems = request.body.clientCart[count].itemname + " " + request.body.clientCart[count].qty + ", "; 
 												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
 											}
 										}
@@ -105,11 +105,10 @@ app.post('/verifyOrder', verify, function(request, response) {
 				});
 				
 				
+			/*	
 				
-				
-		/*		
-				var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, resultCart) {
+	            var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, result) {
 					client.end(function(err) {
 						if (err) throw err;
 						});
@@ -127,9 +126,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 						}
 						
 				});
-			*/	
 				
-				
+				*/
 				
 				
 				response.send(request.body.clientCart);
