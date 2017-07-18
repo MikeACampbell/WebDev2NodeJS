@@ -149,7 +149,7 @@ function displayCart()
 		
 		}
 	
-		temp = temp + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><button id='confrmOrder-button'>Confirm Order</button></div>";
+		temp = temp + "</table><span class='totalContainer'><p>Total: </p><div class='total'> $" + tempTotal.toFixed(2) + "</div></span><div class='confirmOrderContainer'><button id='confrmOrder-button'>Confirm Order</button></div>";
 		$("#divResults").html(temp);
 	}
 	
