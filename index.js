@@ -75,7 +75,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 						}
 						else{
 							
-							
+							console.log(req.body.clientCart);
 							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
 							//I'm just saying this is a popular local store and they only do in store pickup
 							var count = 0;
@@ -99,8 +99,9 @@ app.post('/verifyOrder', verify, function(req, response) {
 											allItems = allItems + req.body.clientCart[count].item_name + " " + req.body.clientCart[count].qty + ", "; 
 											total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
 										}
+										count++;
 									}
-									count++;
+									
 							});
 							
 								
