@@ -356,7 +356,7 @@ app.post('/signInUser', function(request, response) {
 
 									if (result2 == true)
 									{
-										
+										console.log(result.rows[0].role);
 										console.log("Login Attempt by " + uName + " was succesful.");
 										
 										request.session.user = uName;
