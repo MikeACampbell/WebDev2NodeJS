@@ -39,6 +39,9 @@ $(document).on('click', "#store-button", function () {
 			$("#logout-button").hide();
 			$("#signin-button").show();
 			$("#signup-button").show();
+			sessionStorage.uName = "";
+			sessionStorage.loggedIn = 0;
+			sessionStorage.clientCart = [];
 			}
 			
 		}
@@ -65,6 +68,18 @@ $(document).on('click', "#order-button", function () {
 			}
 		
         },
+		statusCode:
+		{
+			401: function() { $("#divResults").text("Please Log In to view your items."); 
+			$("#logout-button").hide();
+			$("#signin-button").show();
+			$("#signup-button").show();
+			sessionStorage.uName = "";
+			sessionStorage.loggedIn = 0;
+			sessionStorage.clientCart = [];
+			}
+			
+		}
 		
 		
     });
@@ -89,7 +104,7 @@ $(document).on('click', "#addToCart-button", function () {
 				{
 					cart[i].price += cartItem["price"]
 					cart[i].qty += 1;
-					console.log(cart[i]);
+					//console.log(cart[i]);
 					sessionStorage.clientCart = JSON.stringify(cart);
 					return;
 				}
@@ -159,11 +174,8 @@ $(document).on('click', "#confrmOrder-button", function () {
 	$.ajax({
 		type: 'POST',
 		url: '/verifyOrder',
-		dataType: "JSON",
-		data: 
-		{
-			clientCart: cart
-		},
+		dataType: "application/JSON",
+		data: JSON.stringify(cart),
 		success: function (result){
 			var tempTotal = 0;
 			var temp1 ="<div class='confirmation'>Order Confirmation</div>"
@@ -179,6 +191,7 @@ $(document).on('click', "#confrmOrder-button", function () {
 	
 		temp2 = temp2 + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><div class='moreExplaining'>Thank You For the Order, you'll pay at pickup at our store</div>";
 		$("#divResults").html(temp2);
+		
 		sessionStorage.clientCart = [];
 		cart = [];
 			
