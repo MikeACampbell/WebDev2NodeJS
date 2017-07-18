@@ -107,7 +107,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 									}
 								}
 									
-							});
+							}
 							
 							
 						}
