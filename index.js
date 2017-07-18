@@ -44,12 +44,23 @@ app.post('/getItem', function(request, response) {
 	getItem(request, response);
 });
 
-var allItems = ""; 
-	var total = 0;
+var allItems; 
+	var total;
 
 //Verifies that corrects any potential altering of prices then adds to order table. 
-app.post('/verifyOrder', verify, function(request, response) {
+app.post('/verifyOrder', verify, check function(request, response) {
 	
+	
+	
+	
+
+	
+	
+	
+});
+	
+	
+function check (request, response, next) {	
 	//console.log(request.body);
 	var temp1 = 0;
 	cartVerified = { success: false} ;
@@ -105,81 +116,28 @@ app.post('/verifyOrder', verify, function(request, response) {
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
 										total = total + parseFloat(tempPrice);
 										
-										//request.session.allItems = allItems;
-										//request.session.total	=	total;
-										console.log("Items: "+ allItems);
-										console.log("Total: " + total.toFixed(2));
+										request.session.allItems = allItems;
+										request.session.total	=	total;
+										//console.log("Items: "+ allItems);
+										//console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
 									
 								}
 						}
-							
+						client.end();
+						next();						
 					}
-				});		
-
-	console.log("Items: "+ allItems);
-	console.log("Total: " + total.toFixed(2));
-	
-		
-		
-	});		
-	console.log("Items: "+ allItems);
-	console.log("Total: " + total.toFixed(2));
-	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
-		client.end(function(err) {
-			if (err) throw err;
-			});
-			if (err) {
-				console.log("Error in query: ")
-				console.log(err);
-				callback(err, null);
-			}
-			else{
-				cartVerified = { success: true} ;
-				
-				
-				
-				
-			}
-						
-		});
-	});
+				});	
+		});		
+}
 	
 
 function upLoad(items, price)
 {
 	
 
-	var client = new pg.Client(connectionString);
-		client.connect(function(err) {
-			if (err) {
-				console.log("Error connecting to DB: ")
-				console.log(err);
-				callback(err, null);
-			}
-	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
-		client.end(function(err) {
-			if (err) throw err;
-			});
-			if (err) {
-				console.log("Error in query: ")
-				console.log(err);
-				callback(err, null);
-			}
-			else{
-				cartVerified = { success: true} ;
-				
-				
-				
-				
-			}
-						
-		});
-	});
 }
 		
 
