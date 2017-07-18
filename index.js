@@ -53,8 +53,10 @@ app.post('/verifyOrder', verify, function(request, response) {
 	var temp1 = 0;
 	var cartVerified = false;
 	var clientCart = request.body.cart;
+	console.log(clientCart);
 	var allItems = ""; // 
 	var total = 0;
+	/*
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -127,14 +129,13 @@ app.post('/verifyOrder', verify, function(request, response) {
 						
 				});
 				
-				*/
 				
 				
 				response.send(request.body.clientCart);
 
 			});
 	
-		
+		*/
 });
 
 app.post('/getItemsFromDb', verify ,function(request, response) {
