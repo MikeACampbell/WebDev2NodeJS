@@ -110,11 +110,15 @@ app.post('/verifyOrder', verify, function(req, response) {
 							}
 							
 							
-						}
-						console.log(allItems);
+						});
+							console.log(allItems);
 				});
-				
-				
+			});
+			
+
+
+
+			
 			/*	
 				
 	            var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
@@ -140,9 +144,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 			*/	
 				
 	//			response.send(req.bo);
-			});
-	
-});
+
 
 app.post('/getItemsFromDb', verify ,function(request, response) {
 	console.log("Getting all items from DB");
