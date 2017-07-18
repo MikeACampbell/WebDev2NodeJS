@@ -105,6 +105,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 										
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
 										total = total + request.body.clientCart[x].price;
+										console.log("Items: "+ allItems);
+										console.log("Total: " + total);
 										}
 									}
 								
@@ -112,14 +114,12 @@ app.post('/verifyOrder', verify, function(request, response) {
 								}
 						}
 							
-						console.log("Items: "+ allItems);
-						console.log("Total: " + total);
 					}
 				});		
 						
 			});
 
-				
+			/*	
 var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -150,6 +150,7 @@ var client = new pg.Client(connectionString);
 						
 				});
 		});		
+		*/
 });
 		
 
