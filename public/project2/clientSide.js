@@ -212,7 +212,8 @@ $(document).on('click', "#removeFromCart-button", function () {
 		
 		if (cart[i].item_id == tempId)
 		{
-			tempTotal = tempTotal - cart[i].price;
+			//tempTotal = tempTotal - cart[i].price;
+			cart[i].price = cart[i].price / cart[i].qty;
 			cart[i].qty = cart[i].qty - 1;
 			if (cart[i].qty == 0)
 			{
