@@ -107,8 +107,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 										
 										//request.session.allItems = allItems;
 										//request.session.total	=	total;
-										//console.log("Items: "+ allItems);
-									//	console.log("Total: " + total.toFixed(2));
+										console.log("Items: "+ allItems);
+										console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
