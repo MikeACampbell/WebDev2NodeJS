@@ -131,8 +131,8 @@ var client = new pg.Client(connectionString);
 	
 	console.log(typeof allItems);
 	console.log(typeof total);
-	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
+	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ('TEST', $2, 48, CURRENT_DATE, 0)";
+	var query = client.query(sql, [request.session.user_id], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
 			});
@@ -140,13 +140,14 @@ var client = new pg.Client(connectionString);
 				console.log("Error in query: ")
 				console.log(err);
 				callback(err, null);
+				client.end;
 			}
 			else{
 				cartVerified = { success: true} ;
 				
 				
 				
-				
+				client.end;
 			}
 						
 		});
