@@ -52,7 +52,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-	var clientCart = JSON.parse(req.body);
+	var clientCart = req.body;
 
 	var allItems = ""; // 
 	var total = 0;

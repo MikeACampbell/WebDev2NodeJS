@@ -176,7 +176,10 @@ $(document).on('click', "#confrmOrder-button", function () {
 		type: 'POST',
 		url: '/verifyOrder',
 		dataType: "application/JSON",
-		data: JSON.stringify(cart),
+		data: 
+		{
+			clientCart: cart
+		},
 		success: function (result){
 			var tempTotal = 0;
 			var temp1 ="<div class='confirmation'>Order Confirmation</div>"
