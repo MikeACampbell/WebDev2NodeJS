@@ -51,9 +51,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 	
 	//console.log(request.body);
 	var temp1 = 0;
-	var cartVerified = false;
 
-	var allItems = "";
+	var allItems = ""; //String to hold.
 	var total = 0;
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
@@ -82,57 +81,58 @@ app.post('/verifyOrder', verify, function(request, response) {
 						
 							request.body.clientCart.forEach(function(value){
 								  
-								  for(var i = 0; i < resultCart.rowCount; i++){
-										if(request.body.clientCart[count].item_id == resultCart.rows[i].item_id)
+							  for(var i = 0; i < resultCart.rowCount; i++){
+									if(request.body.clientCart[count].item_id == resultCart.rows[i].item_id)
+									{
+										temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
+										if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 										{
-											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
-											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
-											{
-												//console.log("Per Unit Price does not match server. correcting");
-												
-												
-												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
-												tempItemsrequest.body.clientCart[count] + " " + request.body.clientCart[count].qty + ", "; 
-												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
-											}
+											//console.log("Per Unit Price does not match server. correcting");
+											
+											request.body.clientCart[count].item_name = resultCart.rows[i].itemname;
+											request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
+										//	tempItemsrequest.body.clientCart[count] + " " + request.body.clientCart[count].qty + ", "; 
+											allItems = allItems + request.body.clientCart[count].item_name + " Qty: " + request.body.clientCart[count].qty + "\n";
+											total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
+											//If I was checking stock I would check here and in the insert to orders table, I will also inlcude an update to the item table.
 										}
 									}
-									count++;
+								}
+							count++;
 							});
 							
-								
-						}
-				});
-				
-				
-				
-				
-		/*		
-				var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-				var query = client.query(sql, [tempItems, request.session.user_id, total], function(err, resultCart) {
-					client.end(function(err) {
-						if (err) throw err;
-						});
-						if (err) {
-							console.log("Error in query: ")
-							console.log(err);
-							callback(err, null);
-						}
-						else{
-							
-							
-							
-							
-							
-						}
 						
+						}
 				});
-			*/	
+		});
+				
+		var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+		var query = client.query(sql, [allItems, request.session.user_id, total], function(err, resultCart) {
+			client.end(function(err) {
+				if (err) throw err;
+				});
+				if (err) {
+					console.log("Error in query: ")
+					console.log(err);
+					callback(err, null);
+				}
+				else{
+					
+					
+				 
+					orderedResult = {success: true};
+					console.log(result);
+					
+					
+					
+				}
+				
+		});
 				
 				
 				
 				
-				response.send(request.body.clientCart);
+				response.send(orderedResult);
 
 			});
 	
