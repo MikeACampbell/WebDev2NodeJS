@@ -338,7 +338,7 @@ app.post('/signInUser', function(request, response) {
 					console.log(err);
 					callback(err, null);
 				}
-					var sql = "SELECT userID, pword, role FROM users WHERE userName = ($1)";
+					var sql = "SELECT userid, pword, role FROM users WHERE userName = ($1)";
 					var query = client.query(sql, [uName], function(err, result) {
 						client.end(function(err) {
 							if (err) throw err;
