@@ -92,13 +92,12 @@ app.post('/verifyOrder', verify, function(req, response) {
 												
 												
 												req.body.clientCart[count].price = resultCart.rows[i].itemprice * req.body.clientCart[count].qty;
-												allItems = req.body.clientCart[count].itemname + " " + req.body.clientCart[count].qty + ", "; 
+												allItems = req.body.clientCart[count].item_name + " " + req.body.clientCart[count].qty + ", "; 
 												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
 												console.log(allItems);
 											}
-											allItems = req.body.clientCart[count].itemname + " " + req.body.clientCart[count].qty + ", "; 
+											allItems = allItems + req.body.clientCart[count].item_name + " " + req.body.clientCart[count].qty + ", "; 
 											total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
-											console.log(allItems);
 										}
 									}
 									count++;
@@ -106,6 +105,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 							
 								
 						}
+						console.log(allItems);
 				});
 				
 				
