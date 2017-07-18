@@ -53,7 +53,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 	var temp1 = 0;
 	var cartVerified = false;
 	
-	console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id);
+	console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
 	var allItems = ""; 
 	var total = 0;
