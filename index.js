@@ -105,8 +105,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 										var tempPrice = request.body.clientCart[x].price;
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
 										total = total + parseFloat(tempPrice);
-										console.log("Items: "+ allItems);
-										console.log("Total: " + total.toFixed(2));
+										//console.log("Items: "+ allItems);
+										//console.log("Total: " + total.toFixed(2));
 										}
 									}
 								
@@ -119,7 +119,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 						
 			});
 
-			/*	
+			
 var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -130,7 +130,7 @@ var client = new pg.Client(connectionString);
 
 			
 			
-	//var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
@@ -150,7 +150,7 @@ var client = new pg.Client(connectionString);
 						
 				});
 		});		
-		*/
+		
 });
 		
 
