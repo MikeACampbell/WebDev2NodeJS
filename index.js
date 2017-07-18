@@ -48,7 +48,7 @@ var allItems;
 	var total;
 
 //Verifies that corrects any potential altering of prices then adds to order table. 
-app.post('/verifyOrder', verify, check function(request, response) {
+app.post('/verifyOrder', verify, check, function(request, response) {
 	
 	
 	
