@@ -13,10 +13,10 @@ box-shadow:0 -12px 12px -12px #000 inset;
 position:relative;z-index:1
 }
 
-#confirmOrder-button{
+.confirmOrderContainer{
 	position: relative;
-	top: 18x;
-	left: 202px;
+	top: 0px;
+	left: 312px;
 }
 
 p.totalLabel
@@ -34,7 +34,7 @@ div.total
 span.totalContainer{
 	position: relative;
 	top: 18x;
-	left: 202px;
+	left: 328px;
 	
 	
 	
