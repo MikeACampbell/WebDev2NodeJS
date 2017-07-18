@@ -36,7 +36,9 @@ $(document).on('click', "#store-button", function () {
 		statusCode:
 		{
 			401: function() { $("#divResults").text("Please Log In to view your items."); }
-			
+			$("#logout-button").hide();
+			$("#signin-button").show();
+			$("#signup-button").show();
 			
 			
 		}
@@ -63,16 +65,7 @@ $(document).on('click', "#order-button", function () {
 			}
 		
         },
-		statusCode:
-		{
-			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
-			$("#signin-button").show();
-			$("#signup-button").show();
-			$("#logout-button").hide();
-			
-			
-			
-		}
+		
 		
     });
 });
@@ -118,16 +111,6 @@ $(document).on('click', "#addToCart-button", function () {
 			sessionStorage.clientCart = JSON.stringify(cart);
 			
 		}
-		statusCode:
-		{
-			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
-			$("#signin-button").show();
-			$("#signup-button").show();
-			$("#logout-button").hide();
-			
-			
-			
-		}
 		
 });
 
@@ -140,7 +123,7 @@ function displayCart()
 {
 	
 	$("#welcome").text("Shopping Cart");
-	var temp = "<ht/><table id='cartTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
+	var temp = "<hr/><table id='cartTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
 	var tempTotal = 0;
 	
 	if (cart.length == 0)
@@ -196,22 +179,13 @@ $(document).on('click', "#confrmOrder-button", function () {
 	
 		temp2 = temp2 + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><div class='moreExplaining'>Thank You For the Order, you'll pay at pickup at our store</div>";
 		$("#divResults").html(temp2);
-		//sessionStorage.clientCart = [];
-		//cart = [];
-			
-			
-			
-		},
-		statusCode:
-		{
-			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
-			$("#signin-button").show();
-			$("#signup-button").show();
-			$("#logout-button").hide();
+		sessionStorage.clientCart = [];
+		cart = [];
 			
 			
 			
 		}
+		
 		
 	});
 	
@@ -356,6 +330,7 @@ $(document).on('submit', '#signin', function(e) {
 			$("#signup-button").hide();
 			$("#welcome").text("Welcome, " + result.userName);
 			$("#logout-button").show();
+			
 			sessionStorage.uName = result.userName;
 			sessionStorage.loggedIn = 1;
 			
