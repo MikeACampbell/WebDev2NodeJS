@@ -101,6 +101,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 										}
 										else
 										{
+										console.log(resultCart);
 										allItems = allItems + req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
 										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
 										}
