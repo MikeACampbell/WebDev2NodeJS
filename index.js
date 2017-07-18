@@ -119,18 +119,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 							
 					}
 				});		
-						
-			});
 
-		/*	
-var client = new pg.Client(connectionString);
-		client.connect(function(err) {
-			if (err) {
-				console.log("Error connecting to DB: ")
-				console.log(err);
-				callback(err, null);
-			}
-	*/
 	
 	console.log("Contents of allItems: " + allItems);
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
@@ -152,7 +141,7 @@ var client = new pg.Client(connectionString);
 			}
 						
 		});
-	//});		
+	});		
 		
 });
 		
