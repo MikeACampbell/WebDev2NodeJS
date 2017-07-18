@@ -81,7 +81,6 @@ app.post('/verifyOrder', verify, function(req, response) {
 							var count = 0;
 							
 							req.body.clientCart.forEach(function(value){
-								  
 								  for(var i = 0; i < resultCart.rowCount; i++){
 										if(req.body.clientCart[count].item_id == resultCart.rows[i].item_id)
 										{		
