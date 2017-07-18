@@ -44,8 +44,6 @@ app.post('/getItem', function(request, response) {
 	getItem(request, response);
 });
 
-var allItems = ""; 
-	var total = 0;
 
 //Verifies that corrects any potential altering of prices then adds to order table. 
 app.post('/verifyOrder', verify, function(request, response) {
@@ -53,7 +51,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	cartVerified = { success: false} ;
-	
+	var allItems; 
+	var total;
 	//console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
 	var client = new pg.Client(connectionString);
