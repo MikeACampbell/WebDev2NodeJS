@@ -104,7 +104,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 										{
 										
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
-										total = total + request.body.clientCart[x].price;
+										total = total + request.body.clientCart[x].price.toFixed(2);
 										console.log("Items: "+ allItems);
 										console.log("Total: " + total);
 										}

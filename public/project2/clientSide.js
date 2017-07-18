@@ -10,6 +10,9 @@ var cartItem = {
 
 var tempStock = [""];
 var tempPrice = [""];
+
+
+
 $(document).on('click', "#store-button", function () {
     $.ajax({
         type: 'POST',
