@@ -51,8 +51,30 @@ var allItems;
 app.post('/verifyOrder', verify, check, function(request, response) {
 	
 	
+	console.log(request.session.allItems);
 	
-	
+	/*
+	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
+	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
+		client.end(function(err) {
+			if (err) throw err;
+			});
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+			else{
+				cartVerified = { success: true} ;
+				console.log("Items: "+ allItems);
+				console.log("Total: " + total.toFixed(2));
+				
+				
+				
+			}
+						
+		});
+		*/
 
 	
 	
