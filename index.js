@@ -52,8 +52,6 @@ app.post('/verifyOrder', verify, function(req, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-	console.log(req.body.clientCart);
-	console.log(req.body.clientCart[1]);
 
 	var allItems = ""; // 
 	var total = 0;
@@ -90,7 +88,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 											temp1 = req.body.clientCart[count].price / req.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
-												//console.log(resultCart);
+												console.log(resultCart);
 												
 												
 												req.body.clientCart[count].price = resultCart.rows[i].itemprice * req.body.clientCart[count].qty;
