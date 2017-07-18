@@ -110,15 +110,15 @@ app.post('/verifyOrder', verify, function(req, response) {
 									
 								}
 						}
-						cartVerified = { success: true} ;	
-						console.log(allItems);
+							
+						//console.log(allItems);
 					}
 				});		
 						
 			});
 
 
-			var client = new pg.Client(connectionString);
+var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
 				console.log("Error connecting to DB: ")
@@ -129,7 +129,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 			
 			
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
-	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
+	var query = client.query(sql, [allItems, req.session.user_id, total], function(err, result) {
 		client.end(function(err) {
 			if (err) throw err;
 			});
@@ -139,8 +139,8 @@ app.post('/verifyOrder', verify, function(req, response) {
 				callback(err, null);
 			}
 			else{
-				
-				
+				cartVerified = { success: true} ;
+				console.log("Yay");
 				
 				
 				
