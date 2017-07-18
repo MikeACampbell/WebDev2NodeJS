@@ -79,12 +79,12 @@ app.post('/verifyOrder', verify, function(request, response) {
 							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
 							//I'm just saying this is a popular local store and they only do in store pickup
 							var count = 0;
-						
+							 console.log(clientCart);
 							request.body.clientCart.forEach(function(value){
 								  
 								  for(var i = 0; i < resultCart.rowCount; i++){
 										if(request.body.clientCart[count].item_id == resultCart.rows[i].item_id)
-										{
+										{		
 											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
