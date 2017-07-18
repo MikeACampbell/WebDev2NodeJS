@@ -44,15 +44,16 @@ app.post('/getItem', function(request, response) {
 	getItem(request, response);
 });
 
-var allItems; 
-	var total;
+var allItems = "";
+var total = 0;
+	
 
 //Verifies that corrects any potential altering of prices then adds to order table. 
 app.post('/verifyOrder', verify, check, function(request, response) {
 	
 	
 	console.log(request.session.allItems);
-	
+	console.log(request.session.total);
 	/*
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
@@ -86,6 +87,7 @@ function check (request, response, next) {
 	//console.log(request.body);
 	var temp1 = 0;
 	cartVerified = { success: false} ;
+	var allItems = "";
 	
 	//console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
