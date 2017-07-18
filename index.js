@@ -52,11 +52,10 @@ app.post('/verifyOrder', verify, function(req, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-	console.log(req.body.clientCart);
+	//req.body.clientCart;
 
 	var allItems = ""; // 
 	var total = 0;
-	/*
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -82,20 +81,21 @@ app.post('/verifyOrder', verify, function(req, response) {
 							//I'm just saying this is a popular local store and they only do in store pickup
 							var count = 0;
 							
-							request.body.clientCart.forEach(function(value){
+							req.body.clientCart.forEach(function(value){
 								  
 								  for(var i = 0; i < resultCart.rowCount; i++){
-										if(request.body.clientCart[count].item_id == resultCart.rows[i].item_id)
+										if(req.body.clientCart[count].item_id == resultCart.rows[i].item_id)
 										{		
-											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
+											temp1 = req.body.clientCart[count].price / req.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
 												//console.log(resultCart);
 												
 												
-												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
-												allItems = request.body.clientCart[count].itemname + " " + request.body.clientCart[count].qty + ", "; 
+												req.body.clientCart[count].price = resultCart.rows[i].itemprice * req.body.clientCart[count].qty;
+												allItems = req.body.clientCart[count].itemname + " " + req.body.clientCart[count].qty + ", "; 
 												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
+												console.log(allItems);
 											}
 										}
 									}
