@@ -102,9 +102,9 @@ app.post('/verifyOrder', verify, function(request, response) {
 										}
 										else
 										{
-										
+										var tempPrice = request.body.clientCart[x].price;
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
-										total = total + request.body.clientCart[x].price.toFixed(2);
+										total = total + Number(tempPrice).toFixed(2);
 										console.log("Items: "+ allItems);
 										console.log("Total: " + total);
 										}
