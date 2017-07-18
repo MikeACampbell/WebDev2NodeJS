@@ -75,11 +75,12 @@ app.post('/verifyOrder', verify, function(req, response) {
 						}
 						else{
 							
-							console.log(req.body.clientCart[0].item_id);
+							console.log("Req " + req.body.clientCart[0].item_id);
+							console.log("Nothing " + resultCart.rows[i].item_id);
 							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
 							//I'm just saying this is a popular local store and they only do in store pickup
 							var count = 0;
-							
+						/*	
 							req.body.clientCart.forEach(function(value){
 								  for(var i = 0; i < resultCart.rowCount; i++){
 										if(req.body.clientCart[count].item_id == resultCart.rows[i].item_id)
@@ -102,7 +103,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 									}
 									
 							});
-							
+							*/
 								
 						}
 						console.log(allItems);
