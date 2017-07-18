@@ -133,7 +133,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 				
 			*/	
 				
-				response.send(request.body.clientCart);
+				response.send(req.body.clientCart);
 			});
 	
 });
