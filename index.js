@@ -96,6 +96,9 @@ app.post('/verifyOrder', verify, function(req, response) {
 												total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
 												console.log(allItems);
 											}
+											allItems = req.body.clientCart[count].itemname + " " + req.body.clientCart[count].qty + ", "; 
+											total = total + Number(resultCart.rows[count].itemprice.replace(/[^0-9\.]+/g,""));
+											console.log(allItems);
 										}
 									}
 									count++;
@@ -128,10 +131,9 @@ app.post('/verifyOrder', verify, function(req, response) {
 						
 				});
 				
-				
+			*/	
 				
 				response.send(request.body.clientCart);
-*/
 			});
 	
 });
