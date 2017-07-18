@@ -162,6 +162,7 @@ function displayCart()
 	
 		temp = temp + "</table><span class='totalContainer'><p class='totalLabel'>Total: </p><div class='total'> $" + tempTotal.toFixed(2) + "</div></span><div class='confirmOrderContainer'><button id='confrmOrder-button'>Confirm Order</button></div>";
 		$("#divResults").html(temp);
+	
 	}
 	
 	
