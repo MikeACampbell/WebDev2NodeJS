@@ -56,7 +56,6 @@ app.post('/verifyOrder', verify, check, function(request, response) {
 	console.log(request.session.total);
 	
 	
-	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
 				console.log("Error connecting to DB: ")
@@ -65,8 +64,7 @@ app.post('/verifyOrder', verify, check, function(request, response) {
 			}
 			else
 			{
-				console.log("PLEASE WORK: " + request.session.allItems);
-				console.log("PLEASE WORK "  + request.session.total);
+				
 			var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 			var query = client.query(sql, [request.session.allItems, request.session.user_id, request.session.total], function(err, result) {
 				client.end(function(err) {
@@ -78,8 +76,10 @@ app.post('/verifyOrder', verify, check, function(request, response) {
 						callback(err, null);
 					}
 					else{
-						cartVerified = { success: true} ;
+						cartVerified = { success: true};
+						client.end;
 						
+						response.json(cartVerified);
 						
 						
 						
@@ -234,7 +234,7 @@ function getOrders(request, response)
 		}
 
 		//Check User Role, if Admin pull all orders. If time permits add ablity to set order as shhipped.
-		var sql = "SELECT * FROM orders INNER JOIN users on ($1) = orders.userID";
+		var sql = "SELECT * FROM orders where userid = $1";
 
 		var query = client.query(sql, [request.session.user_id], function(err, result) {
 			client.end(function(err) {

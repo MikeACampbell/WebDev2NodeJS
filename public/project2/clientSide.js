@@ -61,10 +61,12 @@ $(document).on('click', "#order-button", function () {
         url: '/getOrdersFromDb',
 		success: function (result) {
 			
-			if (result && result.success) {
-		
+			if (result) {
+				
+				$("#welcome").text("Orders");
+					var temp = "<hr/><table id='orderTable' border = '1'><tr><th>Order ID</th><th>Items</th><th>Price</th></tr>\n";
 			
-			//I NEED ORDERS FIRST LOL;
+							
 			
 			
 			
@@ -183,27 +185,12 @@ $(document).on('click', "#confrmOrder-button", function () {
 		{
 			clientCart: cart
 		},
-		success: function (result){
-			var tempTotal = 0;
-			var temp1 ="<div class='confirmation'>Order Confirmation</div>"
-			$("#welcome").html(temp1);
-			var temp2 = "<table id='orderTable' border = '1'><tr><th>Item Name</th><th>Qty</th><th>Price</th></tr>\n";
-			for(var i = 0; i < cart.length; i++)
-		{
-		
-			temp2 = temp2 + "<tr><td>" + cart[i].item_name + "</td><td>" + cart[i].qty + "</td><td>$" + cart[i].price.toFixed(2)+ "</td></tr>";
-			tempTotal = tempTotal + cart[i].price;
-		
-		}
-	
-		temp2 = temp2 + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><div class='moreExplaining'>Thank You For the Order, you'll pay at pickup at our store</div>";
-		$("#divResults").html(temp2);
-		
+		success: function (result && result.success){
+			
 		sessionStorage.clientCart = [];
 		cart = [];
-			
-			
-			
+		$("#welcome").text("Order Completed, please pay when you pickup from our store");
+		$("#divResults").html("");
 		}
 		
 		
