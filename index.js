@@ -233,6 +233,30 @@ function getOrders(request, response)
 			callback(err, null);
 		}
 
+		if (request.session.userRole == 2) // User is Admin 
+		{
+			var sql = "SELECT * FROM orders";
+			var query = client.query(sql,  function(err, result) {
+			client.end(function(err) {
+				if (err) throw err;
+			});
+
+			if (err) {
+				console.log("Error in query: ")
+				console.log(err);
+				callback(err, null);
+			}
+
+			console.log("Found result: " + JSON.stringify(result.rows));
+			response.end(JSON.stringify(result.rows));
+
+			
+		});
+			
+			
+		}
+		else
+		{
 		//Check User Role, if Admin pull all orders. If time permits add ablity to set order as shhipped.
 		var sql = "SELECT * FROM orders where userid = $1";
 
@@ -252,6 +276,7 @@ function getOrders(request, response)
 
 			
 		});
+		}
 	});
 	
 	

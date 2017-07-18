@@ -71,7 +71,7 @@ $(document).on('click', "#order-button", function () {
 		}
 					temp = temp + "</table>";	
 			
-					$("#divResults").html(temp);
+					$("#divResults").text(result);
 			
 			}
 		
