@@ -93,7 +93,6 @@ app.post('/verifyOrder', verify, function(request, response) {
 										temp1 = request.body.clientCart[x].price / request.body.clientCart[x].qty;
 										if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 										{
-											console.log(resultCart);
 											
 											
 											request.body.clientCart[x].price = resultCart.rows[i].itemprice * request.body.clientCart[x].qty;
@@ -105,7 +104,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 										{
 										
 										allItems = allItems + request.body.clientCart[x].item_name + " " + request.body.clientCart[x].qty + ", "; 
-										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,"")) * request.body.clientCart[x].qty;
+										total = total + request.body.clientCart[x].price;
 										}
 									}
 								
@@ -113,8 +112,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 								}
 						}
 							
-						console.log(allItems);
-						console.log(total);
+						console.log("Items: "+ allItems);
+						console.log("Total: " + total);
 					}
 				});		
 						
