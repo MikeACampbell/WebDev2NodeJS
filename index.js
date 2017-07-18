@@ -111,13 +111,13 @@ app.post('/verifyOrder', verify, function(req, response) {
 								}
 						}
 							
-						//console.log(allItems);
+						console.log("IS THIS REAL" + req.session.user_id);
 					}
 				});		
 						
 			});
 
-
+				
 var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
