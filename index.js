@@ -46,7 +46,7 @@ app.post('/getItem', function(request, response) {
 
 
 
-//Verifies that corrects any potential altering of prices.
+//Verifies that corrects any potential altering of prices then adds to order table. 
 app.post('/verifyOrder', verify, function(request, response) {
 	
 	//console.log(request.body);
@@ -78,8 +78,8 @@ app.post('/verifyOrder', verify, function(request, response) {
 					else
 					{
 						
-						console.log("Req " + req.body.clientCart.length);
-						console.log("Nothing " + resultCart.rows[0].item_id);
+						//console.log("Req " + req.body.clientCart.length);
+						//console.log("Nothing " + resultCart.rows[0].item_id);
 						//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
 						//I'm just saying this is a popular local store and they only do in store pickup
 					
@@ -356,8 +356,8 @@ app.post('/signInUser', function(request, response) {
 
 									if (result2 == true)
 									{
-										console.log(result.rows[0].userid);
-										console.log("Login Attempt by " + uName + " was succesful.");
+										//console.log(result.rows[0].userid);
+										//console.log("Login Attempt by " + uName + " was succesful.");
 										
 										request.session.user = uName;
 										request.session.userRole = result.rows[0].role;
