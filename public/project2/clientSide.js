@@ -66,6 +66,9 @@ $(document).on('click', "#order-button", function () {
 		statusCode:
 		{
 			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
+			$("#signin-button").show();
+			$("#signup-button").show();
+			$("#logout-button").hide();
 			
 			
 			
@@ -113,6 +116,16 @@ $(document).on('click', "#addToCart-button", function () {
 			
 			cart.push(cartItem);
 			sessionStorage.clientCart = JSON.stringify(cart);
+			
+		}
+		statusCode:
+		{
+			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
+			$("#signin-button").show();
+			$("#signup-button").show();
+			$("#logout-button").hide();
+			
+			
 			
 		}
 		
@@ -183,13 +196,22 @@ $(document).on('click', "#confrmOrder-button", function () {
 	
 		temp2 = temp2 + "</table><div class='total'> $" + tempTotal.toFixed(2) + "</div><div class='confirmOrderContainer'><div class='moreExplaining'>Thank You For the Order, you'll pay at pickup at our store</div>";
 		$("#divResults").html(temp2);
-		sessionStorage.clientCart = [];
-		cart = [];
+		//sessionStorage.clientCart = [];
+		//cart = [];
+			
+			
+			
+		},
+		statusCode:
+		{
+			401: function() { $("#divResults").text("Please Log In to view your Orders");; }
+			$("#signin-button").show();
+			$("#signup-button").show();
+			$("#logout-button").hide();
 			
 			
 			
 		}
-		
 		
 	});
 	
