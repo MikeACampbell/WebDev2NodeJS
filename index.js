@@ -53,7 +53,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 	var temp1 = 0;
 	var cartVerified = false;
 
-	var allItems = ""; // 
+	var allItems = ""; 
 	var total = 0;
 	var client = new pg.Client(connectionString);
 		client.connect(function(err) {
@@ -63,58 +63,59 @@ app.post('/verifyOrder', verify, function(req, response) {
 				callback(err, null);
 			}
 			
-				var sql = "SELECT item_id, itemname, itemprice FROM item";
-				var query = client.query(sql, function(err, resultCart) {
-					client.end(function(err) {
-						if (err) throw err;
-					});
-						if (err) {
-							console.log("Error in query: ")
-							console.log(err);
-							callback(err, null);
-						}
-						else{
-							
-							console.log("Req " + req.body.clientCart.length);
-							console.log("Nothing " + resultCart.rows[0].item_id);
-							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
-							//I'm just saying this is a popular local store and they only do in store pickup
-						
-						
-							 for(var x = 0; x < req.body.clientCart.length; x++){
-								  for(var i = 0; i < resultCart.rowCount; i++){
-										if(req.body.clientCart[x].item_id == resultCart.rows[i].item_id)
-										{		
-											temp1 = req.body.clientCart[x].price / req.body.clientCart[x].qty;
-											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
-											{
-												console.log(resultCart);
-												
-												
-												req.body.clientCart[x].price = resultCart.rows[i].itemprice * req.body.clientCart[x].qty;
-												allItems = req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-												total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
-												console.log(allItems);
-											}
-											else
-											{
-											allItems = allItems + req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
-											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
-											}
-										}
-								  	
-										
-									}
-								}
-									
-							}
-							
-							
-						});
-							console.log(allItems);
+			var sql = "SELECT item_id, itemname, itemprice FROM item";
+			var query = client.query(sql, function(err, resultCart) { 
+				client.end(function(err) { 
+					if (err) throw err;
 				});
+					if (err) {
+						console.log("Error in query: ")
+						console.log(err);
+						callback(err, null);
+					}
+					else
+					{
+						
+						console.log("Req " + req.body.clientCart.length);
+						console.log("Nothing " + resultCart.rows[0].item_id);
+						//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
+						//I'm just saying this is a popular local store and they only do in store pickup
+					
+					
+						 for(var x = 0; x < req.body.clientCart.length; x++)
+						 {
+							  for(var i = 0; i < resultCart.rowCount; i++)
+							  {
+									if(req.body.clientCart[x].item_id == resultCart.rows[i].item_id)
+									{		
+										temp1 = req.body.clientCart[x].price / req.body.clientCart[x].qty;
+										if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
+										{
+											console.log(resultCart);
+											
+											
+											req.body.clientCart[x].price = resultCart.rows[i].itemprice * req.body.clientCart[x].qty;
+											allItems = req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
+											total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
+											console.log(allItems);
+										}
+										else
+										{
+										allItems = allItems + req.body.clientCart[x].item_name + " " + req.body.clientCart[x].qty + ", "; 
+										total = total + Number(resultCart.rows[x].itemprice.replace(/[^0-9\.]+/g,""));
+										}
+									}
+								
+									
+								}
+						}
+								
+					}
+				});		
+						
 			});
-			
+	});
+		
 
 
 
