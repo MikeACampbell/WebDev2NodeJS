@@ -132,10 +132,9 @@ app.post('/verifyOrder', verify, function(req, response) {
 				
 				
 				response.send(request.body.clientCart);
-
+*/
 			});
 	
-		*/
 });
 
 app.post('/getItemsFromDb', verify ,function(request, response) {
