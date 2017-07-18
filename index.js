@@ -53,7 +53,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 	var temp1 = 0;
 	cartVerified = { success: false} ;
 	
-	console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
+	//console.log(request.session.user + " ID " + request.session.userID + " " + request.session.user_id + " " + request.session.userRole);
 
 	var allItems = ""; 
 	var total = 0;
@@ -119,7 +119,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 						
 			});
 
-			
+		/*	
 var client = new pg.Client(connectionString);
 		client.connect(function(err) {
 			if (err) {
@@ -127,9 +127,7 @@ var client = new pg.Client(connectionString);
 				console.log(err);
 				callback(err, null);
 			}
-
-			
-			
+	*/
 	var sql = "INSERT INTO orders (items, userid, price, ordereddate, status) VALUES ($1, $2, $3, CURRENT_DATE, 0)";
 	var query = client.query(sql, [allItems, request.session.user_id, total], function(err, result) {
 		client.end(function(err) {
@@ -148,8 +146,8 @@ var client = new pg.Client(connectionString);
 				
 			}
 						
-				});
-		});		
+		});
+	//});		
 		
 });
 		
