@@ -21,16 +21,10 @@ $(document).on('click', "#store-button", function () {
 		
 		var temp = "<div class='welcome'>Select Item</div><hr/>";
 		$("#welcome").html(temp);
-		var tempHolder = "";
+		var temp = "";
 		for (var i = 0; i < result.length; i++)
 		{
-			// So I couldn't find pictures of cookie dough containers without branding. So I'm just using pictures of the cookies. Image Soruce iis Otis Spunkmyer's website.  
-			tempHolder = tempHolder + "<div class='storeMember' id='member'><img class='itemImage' id = '" + result[i].item_id + "' src='./images/" + result[i].itemimage 
-			+ ".png'><div class='itemName'></br>" + result[i].itemname + " " + result[i].itemprice +  " <button id='addToCart-button' name='" + result[i].itemname +  "' class='buy' value='" + result[i].item_id  + "'>Add to Cart</button></div></div>";
-			
-			//tempStock[result[i].item_id] = result[i].instock;  Disabled stock for now. I feel like my current set up is too clunky. 
-			tempPrice[result[i].item_id] = result[i].itemprice; // Both of these are exclusively only for handling of the client side, on sumbission of the order I will double check all values with the server.
- 
+			temp = temp + "<tr><td>" + result[i].orderid + "</td><td>" + result[i].items + "</td><td>" + result[i].total + "</td></tr>";
 		}
 		
 		$("#divResults").html(tempHolder);
@@ -65,7 +59,16 @@ $(document).on('click', "#order-button", function () {
 				
 				$("#welcome").text("Orders");
 					var temp = "<hr/><table id='orderTable' border = '1'><tr><th>Order ID</th><th>Items</th><th>Price</th></tr>\n";
+					for (var i = 0; i < result.length; i++)
+		{
+			// So I couldn't find pictures of cookie dough containers without branding. So I'm just using pictures of the cookies. Image Soruce iis Otis Spunkmyer's website.  
+				tempHolder = tempHolder + "<div class='storeMember' id='member'><img class='itemImage' id = '" + result[i].item_id + "' src='./images/" + result[i].itemimage 
+			+ ".png'><div class='itemName'></br>" + result[i].itemname + " " + result[i].itemprice +  " <button id='addToCart-button' name='" + result[i].itemname +  "' class='buy' value='" + result[i].item_id  + "'>Add to Cart</button></div></div>";
 			
+			//tempStock[result[i].item_id] = result[i].instock;  Disabled stock for now. I feel like my current set up is too clunky. 
+			tempPrice[result[i].item_id] = result[i].itemprice; // Both of these are exclusively only for handling of the client side, on sumbission of the order I will double check all values with the server.
+ 
+		}
 							
 			
 			
