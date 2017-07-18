@@ -134,7 +134,7 @@ app.post('/verifyOrder', verify, function(req, response) {
 				
 			*/	
 				
-				response.send(req);
+	//			response.send(req.bo);
 			});
 	
 });
