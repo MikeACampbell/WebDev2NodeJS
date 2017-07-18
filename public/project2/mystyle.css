@@ -14,10 +14,9 @@ position:relative;z-index:1
 }
 
 #confirmOrder-button{
-	position: absolute;
-	top: 225px;
-	left: 200px;
-	
+	position: relative;
+	top: 18x;
+	left: 202px;
 }
 
 p.totalLabel
@@ -33,9 +32,9 @@ div.total
 }
 
 span.totalContainer{
-	position: absolute;
-	top: 200px;
-	left: 207px;
+	position: relative;
+	top: 18x;
+	left: 202px;
 	
 	
 	
