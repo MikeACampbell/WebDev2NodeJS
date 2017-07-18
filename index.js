@@ -52,7 +52,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 	//console.log(request.body);
 	var temp1 = 0;
 	var cartVerified = false;
-
+	var clientCart = request.body.cart;
 	var allItems = ""; // 
 	var total = 0;
 	var client = new pg.Client(connectionString);
@@ -79,7 +79,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 							//Again I know there's likely a better way to handle this, likely thought a third party tool.  just don't have the time to intergrate it, and given that I don't plan to implement a payment system.
 							//I'm just saying this is a popular local store and they only do in store pickup
 							var count = 0;
-							 console.log(clientCart);
+							
 							request.body.clientCart.forEach(function(value){
 								  
 								  for(var i = 0; i < resultCart.rowCount; i++){
@@ -88,7 +88,7 @@ app.post('/verifyOrder', verify, function(request, response) {
 											temp1 = request.body.clientCart[count].price / request.body.clientCart[count].qty;
 											if(temp1 != Number(resultCart.rows[i].itemprice.replace(/[^0-9\.]+/g,"")))
 											{
-												console.log(resultCart);
+												//console.log(resultCart);
 												
 												
 												request.body.clientCart[count].price = resultCart.rows[i].itemprice * request.body.clientCart[count].qty;
