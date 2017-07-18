@@ -185,7 +185,7 @@ $(document).on('click', "#confrmOrder-button", function () {
 		{
 			clientCart: cart
 		},
-		success: function (result && result.success){
+		success: function (result){
 			
 		sessionStorage.clientCart = [];
 		cart = [];
