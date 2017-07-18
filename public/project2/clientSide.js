@@ -35,11 +35,11 @@ $(document).on('click', "#store-button", function () {
         },
 		statusCode:
 		{
-			401: function() { $("#divResults").text("Please Log In to view your items."); }
+			401: function() { $("#divResults").text("Please Log In to view your items."); 
 			$("#logout-button").hide();
 			$("#signin-button").show();
 			$("#signup-button").show();
-			
+			}
 			
 		}
 		
